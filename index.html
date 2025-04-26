@@ -1,0 +1,237 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Barangay Health Monitoring</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #cfec9d, #88cf67);
+      margin: 0;
+      padding: 20px;
+      color: #265c32;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h1, h2 {
+      color: #265c32;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .inline-field {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 8px;
+    }
+
+    .inline-field label {
+      width: 160px;
+      white-space: nowrap;
+    }
+
+    .inline-field input,
+    .inline-field select {
+      flex: 1;
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .radio-group,
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+      max-width: 300px;
+    }
+
+    textarea {
+      width: 100%;
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      margin-bottom: 15px;
+    }
+
+    button {
+      background-color: #265c32;
+      color: white;
+      padding: 10px;
+      width: 100%;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #1e4628;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 40px;
+    }
+
+    th, td {
+      border: 1px solid #1a4605;
+      padding: 10px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #265c32;
+      color: white;
+      border: 1px solid #1a4605;
+    }
+
+    @media (max-width: 768px) {
+      body {
+      font-size: 16px;
+    }
+  }
+
+    @media (max-width: 480px) {
+      body {
+      font-size: 14px;
+    }
+  }
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Barangay Health Monitoring</h1>
+  </header>
+
+  <main class="container">
+    <form id="healthForm">
+      <h2>Personal Information</h2>
+
+      <div class="inline-field">
+        <label for="h-name">Full Name:</label>
+        <input type="text" id="h-name" required />
+      </div>
+
+      <div class="inline-field">
+        <label for="h-age">Age:</label>
+        <input type="number" id="h-age" min="1" max="120" required />
+      </div>
+
+      <div class="inline-field">
+        <label for="h-address">Address:</label>
+        <select id="h-address">
+          <option>Purok 1</option>
+          <option>Purok 2</option>
+          <option>Purok 3</option>
+        </select>
+      </div>
+
+      <div class="inline-field">
+        <label>Gender:</label>
+        <div class="radio-group">
+          <label><input type="radio" name="h-gender" value="Male" required /> Male</label>
+          <label><input type="radio" name="h-gender" value="Female" /> Female</label>
+          <label><input type="radio" name="h-gender" value="Other" /> Other</label>
+        </div>
+      </div>
+
+      <h2>Health Status</h2>
+
+      <div class="inline-field">
+        <label for="h-vax">Vaccination Status:</label>
+        <select id="h-vax">
+          <option>Vaccinated</option>
+          <option>Unvaccinated</option>
+        </select>
+      </div>
+
+      <div class="inline-field">
+        <label>Recent Symptoms:</label>
+        <div class="checkbox-group">
+          <label><input type="checkbox" value="Fever" /> Fever</label>
+          <label><input type="checkbox" value="Cough" /> Cough</label>
+          <label><input type="checkbox" value="Fatigue" /> Fatigue</label>
+        </div>
+      </div>
+
+      <div class="inline-field">
+        <label for="h-checkup">Last Medical Checkup:</label>
+        <input type="date" id="h-checkup" />
+      </div>
+
+      <label for="h-notes">Additional Health Notes</label>
+      <textarea id="h-notes" rows="3"></textarea>
+
+      <button type="submit">Submit</button>
+    </form>
+  </main>
+
+  <table id="healthTable">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Gender</th>
+        <th>Address</th>
+        <th>Vaccination</th>
+        <th>Symptoms</th>
+        <th>Last Checkup</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    document.getElementById('healthForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById('h-name').value;
+      const age = document.getElementById('h-age').value;
+      const gender = document.querySelector('input[name="h-gender"]:checked')?.value || '';
+      const address = document.getElementById('h-address').value;
+      const vax = document.getElementById('h-vax').value;
+      const symptoms = [...document.querySelectorAll('input[type="checkbox"]:checked')]
+        .map(el => el.value).join(', ');
+      const checkup = document.getElementById('h-checkup').value;
+      const notes = document.getElementById('h-notes').value;
+
+      const tableBody = document.querySelector('#healthTable tbody');
+      const row = tableBody.insertRow();
+      row.innerHTML = `
+        <td>${name}</td>
+        <td>${age}</td>
+        <td>${gender}</td>
+        <td>${address}</td>
+        <td>${vax}</td>
+        <td>${symptoms}</td>
+        <td>${checkup}</td>
+        <td>${notes}</td>
+      `;
+
+      alert("Thank you for Submitting! Stay Safe");
+      this.reset();
+    });
+  </script>
+
+</body>
+</html>
