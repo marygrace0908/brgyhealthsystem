@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -102,18 +101,25 @@
       border: 1px solid #1a4605;
     }
 
+    #success-message {
+      color: green;
+      text-align: center;
+      margin-top: 10px;
+      font-weight: bold;
+      display: none;
+    }
+
     @media (max-width: 768px) {
       body {
-      font-size: 16px;
+        font-size: 16px;
+      }
     }
-  }
 
     @media (max-width: 480px) {
       body {
-      font-size: 14px;
+        font-size: 14px;
+      }
     }
-  }
-
   </style>
 </head>
 <body>
@@ -138,7 +144,8 @@
 
       <div class="inline-field">
         <label for="h-address">Address:</label>
-        <select id="h-address">
+        <select id="h-address" required>
+          <option value="">Select Purok</option>
           <option>Purok 1</option>
           <option>Purok 2</option>
           <option>Purok 3</option>
@@ -158,7 +165,8 @@
 
       <div class="inline-field">
         <label for="h-vax">Vaccination Status:</label>
-        <select id="h-vax">
+        <select id="h-vax" required>
+          <option value="">Select Status</option>
           <option>Vaccinated</option>
           <option>Unvaccinated</option>
         </select>
@@ -167,21 +175,22 @@
       <div class="inline-field">
         <label>Recent Symptoms:</label>
         <div class="checkbox-group">
-          <label><input type="checkbox" value="Fever" /> Fever</label>
-          <label><input type="checkbox" value="Cough" /> Cough</label>
-          <label><input type="checkbox" value="Fatigue" /> Fatigue</label>
+          <label><input type="checkbox" name="symptoms" value="Fever" /> Fever</label>
+          <label><input type="checkbox" name="symptoms" value="Cough" /> Cough</label>
+          <label><input type="checkbox" name="symptoms" value="Fatigue" /> Fatigue</label>
         </div>
       </div>
 
       <div class="inline-field">
         <label for="h-checkup">Last Medical Checkup:</label>
-        <input type="date" id="h-checkup" />
+        <input type="date" id="h-checkup" required />
       </div>
 
       <label for="h-notes">Additional Health Notes</label>
       <textarea id="h-notes" rows="3"></textarea>
 
       <button type="submit">Submit</button>
+      <div id="success-message">Thank you for submitting! Stay Safe!</div>
     </form>
 
     <table id="healthTable">
@@ -210,7 +219,7 @@
       const gender = document.querySelector('input[name="h-gender"]:checked')?.value || '';
       const address = document.getElementById('h-address').value;
       const vax = document.getElementById('h-vax').value;
-      const symptoms = [...document.querySelectorAll('input[type="checkbox"]:checked')]
+      const symptoms = [...document.querySelectorAll('input[name="symptoms"]:checked')]
         .map(el => el.value).join(', ');
       const checkup = document.getElementById('h-checkup').value;
       const notes = document.getElementById('h-notes').value;
@@ -228,7 +237,14 @@
         <td>${notes}</td>
       `;
 
-      alert("Thank you for Submitting! Stay Safe");
+      // Show success message
+      const message = document.getElementById('success-message');
+      message.style.display = 'block';
+      setTimeout(() => {
+        message.style.display = 'none';
+      }, 3000);
+
+      // Reset form
       this.reset();
     });
   </script>
