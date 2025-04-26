@@ -83,10 +83,15 @@
       background-color: #1e4628;
     }
 
+    .table-container {
+      overflow-x: auto;
+      margin-top: 40px;
+    }
+
     table {
       width: 100%;
+      min-width: 600px;
       border-collapse: collapse;
-      margin-top: 40px;
     }
 
     th, td {
@@ -101,17 +106,12 @@
       border: 1px solid #1a4605;
     }
 
-    #success-message {
-      color: green;
-      text-align: center;
-      margin-top: 10px;
-      font-weight: bold;
-      display: none;
-    }
-
     @media (max-width: 768px) {
       body {
         font-size: 16px;
+      }
+      .table-container {
+        margin-top: 20px;
       }
     }
 
@@ -145,7 +145,7 @@
       <div class="inline-field">
         <label for="h-address">Address:</label>
         <select id="h-address" required>
-          <option value="">Select Purok</option>
+          <option value="" disabled selected>Select Purok</option>
           <option>Purok 1</option>
           <option>Purok 2</option>
           <option>Purok 3</option>
@@ -166,7 +166,7 @@
       <div class="inline-field">
         <label for="h-vax">Vaccination Status:</label>
         <select id="h-vax" required>
-          <option value="">Select Status</option>
+          <option value="" disabled selected>Select Status</option>
           <option>Vaccinated</option>
           <option>Unvaccinated</option>
         </select>
@@ -175,39 +175,40 @@
       <div class="inline-field">
         <label>Recent Symptoms:</label>
         <div class="checkbox-group">
-          <label><input type="checkbox" name="symptoms" value="Fever" /> Fever</label>
-          <label><input type="checkbox" name="symptoms" value="Cough" /> Cough</label>
-          <label><input type="checkbox" name="symptoms" value="Fatigue" /> Fatigue</label>
+          <label><input type="checkbox" value="Fever" /> Fever</label>
+          <label><input type="checkbox" value="Cough" /> Cough</label>
+          <label><input type="checkbox" value="Fatigue" /> Fatigue</label>
         </div>
       </div>
 
       <div class="inline-field">
         <label for="h-checkup">Last Medical Checkup:</label>
-        <input type="date" id="h-checkup" required />
+        <input type="date" id="h-checkup" />
       </div>
 
       <label for="h-notes">Additional Health Notes</label>
       <textarea id="h-notes" rows="3"></textarea>
 
       <button type="submit">Submit</button>
-      <div id="success-message">Thank you for submitting! Stay Safe!</div>
     </form>
 
-    <table id="healthTable">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Age</th>
-          <th>Gender</th>
-          <th>Address</th>
-          <th>Vaccination</th>
-          <th>Symptoms</th>
-          <th>Last Checkup</th>
-          <th>Notes</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
+    <div class="table-container">
+      <table id="healthTable">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Gender</th>
+            <th>Address</th>
+            <th>Vaccination</th>
+            <th>Symptoms</th>
+            <th>Last Checkup</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
   </main>
 
   <script>
@@ -219,7 +220,7 @@
       const gender = document.querySelector('input[name="h-gender"]:checked')?.value || '';
       const address = document.getElementById('h-address').value;
       const vax = document.getElementById('h-vax').value;
-      const symptoms = [...document.querySelectorAll('input[name="symptoms"]:checked')]
+      const symptoms = [...document.querySelectorAll('input[type="checkbox"]:checked')]
         .map(el => el.value).join(', ');
       const checkup = document.getElementById('h-checkup').value;
       const notes = document.getElementById('h-notes').value;
@@ -237,14 +238,7 @@
         <td>${notes}</td>
       `;
 
-      // Show success message
-      const message = document.getElementById('success-message');
-      message.style.display = 'block';
-      setTimeout(() => {
-        message.style.display = 'none';
-      }, 3000);
-
-      // Reset form
+      alert("Thank you for submitting! Stay safe!");
       this.reset();
     });
   </script>
