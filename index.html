@@ -22,29 +22,32 @@
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
-    h1, h2 {
-      color: #265c32;
-    }
-
     h1 {
+      color: #265c32;
       text-align: center;
     }
 
-    .inline-field {
+    h2 {
+      color: #265c32;
+      text-align: left;
+    }
+
+    form {
       display: flex;
-      align-items: center;
-      gap: 5px;
-      margin-bottom: 8px;
+      flex-direction: column;
+      gap: 15px;
     }
 
-    .inline-field label {
-      width: 160px;
-      white-space: nowrap;
+    label {
+      margin-bottom: 0px;
     }
 
-    .inline-field input,
-    .inline-field select {
-      flex: 1;
+    input[type="text"],
+    input[type="number"],
+    input[type="date"],
+    select,
+    textarea {
+      width: 100%;
       padding: 8px;
       border-radius: 5px;
       border: 1px solid #ccc;
@@ -55,15 +58,7 @@
       display: flex;
       flex-direction: column;
       gap: 5px;
-      margin-bottom: 10px;
-    }
-
-    textarea {
-      width: 100%;
-      padding: 8px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      margin-bottom: 15px;
+      padding-left: 20px;
     }
 
     button {
@@ -109,9 +104,6 @@
       body {
         font-size: 16px;
       }
-      .table-container {
-        margin-top: 20px;
-      }
     }
 
     @media (max-width: 480px) {
@@ -131,61 +123,47 @@
     <form id="healthForm">
       <h2>Personal Information</h2>
 
-      <div class="inline-field">
-        <label for="h-name">Full Name:</label>
-        <input type="text" id="h-name" required />
-      </div>
+      <label for="h-name">Full Name:</label>
+      <input type="text" id="h-name" required />
 
-      <div class="inline-field">
-        <label for="h-age">Age:</label>
-        <input type="number" id="h-age" min="1" max="120" required />
-      </div>
+      <label for="h-age">Age:</label>
+      <input type="number" id="h-age" min="1" max="120" required />
 
-      <div class="inline-field">
-        <label for="h-address">Address:</label>
-        <select id="h-address" required>
-          <option value="" disabled selected>Select Purok</option>
-          <option>Purok 1</option>
-          <option>Purok 2</option>
-          <option>Purok 3</option>
-        </select>
-      </div>
+      <label for="h-address">Address:</label>
+      <select id="h-address" required>
+        <option value="" disabled selected>Select Purok</option>
+        <option>Purok 1</option>
+        <option>Purok 2</option>
+        <option>Purok 3</option>
+      </select>
 
-      <div class="inline-field">
-        <label>Gender:</label>
-        <div class="radio-group">
-          <label><input type="radio" name="h-gender" value="Male" required /> Male</label>
-          <label><input type="radio" name="h-gender" value="Female" /> Female</label>
-          <label><input type="radio" name="h-gender" value="Other" /> Other</label>
-        </div>
+      <label>Gender:</label>
+      <div class="radio-group">
+        <label><input type="radio" name="h-gender" value="Male" required /> Male</label>
+        <label><input type="radio" name="h-gender" value="Female" /> Female</label>
+        <label><input type="radio" name="h-gender" value="Other" /> Other</label>
       </div>
 
       <h2>Health Status</h2>
 
-      <div class="inline-field">
-        <label for="h-vax">Vaccination Status:</label>
-        <select id="h-vax" required>
-          <option value="" disabled selected>Select Status</option>
-          <option>Vaccinated</option>
-          <option>Unvaccinated</option>
-        </select>
+      <label for="h-vax">Vaccination Status:</label>
+      <select id="h-vax" required>
+        <option value="" disabled selected>Select Status</option>
+        <option>Vaccinated</option>
+        <option>Unvaccinated</option>
+      </select>
+
+      <label>Recent Symptoms:</label>
+      <div class="checkbox-group">
+        <label><input type="checkbox" value="Fever" /> Fever</label>
+        <label><input type="checkbox" value="Cough" /> Cough</label>
+        <label><input type="checkbox" value="Fatigue" /> Fatigue</label>
       </div>
 
-      <div class="inline-field">
-        <label>Recent Symptoms:</label>
-        <div class="checkbox-group">
-          <label><input type="checkbox" value="Fever" /> Fever</label>
-          <label><input type="checkbox" value="Cough" /> Cough</label>
-          <label><input type="checkbox" value="Fatigue" /> Fatigue</label>
-        </div>
-      </div>
+      <label for="h-checkup">Last Medical Checkup:</label>
+      <input type="date" id="h-checkup" />
 
-      <div class="inline-field">
-        <label for="h-checkup">Last Medical Checkup:</label>
-        <input type="date" id="h-checkup" />
-      </div>
-
-      <label for="h-notes">Additional Health Notes</label>
+      <label for="h-notes">Additional Health Notes:</label>
       <textarea id="h-notes" rows="3"></textarea>
 
       <button type="submit">Submit</button>
