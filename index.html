@@ -22,32 +22,29 @@
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
-    h1 {
+    h1, h2 {
       color: #265c32;
+    }
+
+    h1 {
       text-align: center;
     }
 
-    h2 {
-      color: #265c32;
-      text-align: left;
-    }
-
-    form {
+    .inline-field {
       display: flex;
-      flex-direction: column;
-      gap: 15px;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 8px;
     }
 
-    label {
-      margin-bottom: 0px;
+    .inline-field label {
+      width: 160px;
+      white-space: nowrap;
     }
 
-    input[type="text"],
-    input[type="number"],
-    input[type="date"],
-    select,
-    textarea {
-      width: 100%;
+    .inline-field input,
+    .inline-field select {
+      flex: 1;
       padding: 8px;
       border-radius: 5px;
       border: 1px solid #ccc;
@@ -56,9 +53,18 @@
     .radio-group,
     .checkbox-group {
       display: flex;
-      flex-direction: column;
-      gap: 5px;
-      padding-left: 20px;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+      max-width: 300px;
+    }
+
+    textarea {
+      width: 100%;
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      margin-bottom: 15px;
     }
 
     button {
@@ -77,15 +83,10 @@
       background-color: #1e4628;
     }
 
-    .table-container {
-      overflow-x: auto;
-      margin-top: 40px;
-    }
-
     table {
       width: 100%;
-      min-width: 600px;
       border-collapse: collapse;
+      margin-top: 40px;
     }
 
     th, td {
@@ -98,6 +99,14 @@
       background-color: #265c32;
       color: white;
       border: 1px solid #1a4605;
+    }
+
+    #success-message {
+      color: green;
+      text-align: center;
+      margin-top: 10px;
+      font-weight: bold;
+      display: none;
     }
 
     @media (max-width: 768px) {
@@ -123,69 +132,82 @@
     <form id="healthForm">
       <h2>Personal Information</h2>
 
-      <label for="h-name">Full Name:</label>
-      <input type="text" id="h-name" required />
+      <div class="inline-field">
+        <label for="h-name">Full Name:</label>
+        <input type="text" id="h-name" required />
+      </div>
 
-      <label for="h-age">Age:</label>
-      <input type="number" id="h-age" min="1" max="120" required />
+      <div class="inline-field">
+        <label for="h-age">Age:</label>
+        <input type="number" id="h-age" min="1" max="120" required />
+      </div>
 
-      <label for="h-address">Address:</label>
-      <select id="h-address" required>
-        <option value="" disabled selected>Select Purok</option>
-        <option>Purok 1</option>
-        <option>Purok 2</option>
-        <option>Purok 3</option>
-      </select>
+      <div class="inline-field">
+        <label for="h-address">Address:</label>
+        <select id="h-address" required>
+          <option value="">Select Purok</option>
+          <option>Purok 1</option>
+          <option>Purok 2</option>
+          <option>Purok 3</option>
+        </select>
+      </div>
 
-      <label>Gender:</label>
-      <div class="radio-group">
-        <label><input type="radio" name="h-gender" value="Male" required /> Male</label>
-        <label><input type="radio" name="h-gender" value="Female" /> Female</label>
-        <label><input type="radio" name="h-gender" value="Other" /> Other</label>
+      <div class="inline-field">
+        <label>Gender:</label>
+        <div class="radio-group">
+          <label><input type="radio" name="h-gender" value="Male" required /> Male</label>
+          <label><input type="radio" name="h-gender" value="Female" /> Female</label>
+          <label><input type="radio" name="h-gender" value="Other" /> Other</label>
+        </div>
       </div>
 
       <h2>Health Status</h2>
 
-      <label for="h-vax">Vaccination Status:</label>
-      <select id="h-vax" required>
-        <option value="" disabled selected>Select Status</option>
-        <option>Vaccinated</option>
-        <option>Unvaccinated</option>
-      </select>
-
-      <label>Recent Symptoms:</label>
-      <div class="checkbox-group">
-        <label><input type="checkbox" value="Fever" /> Fever</label>
-        <label><input type="checkbox" value="Cough" /> Cough</label>
-        <label><input type="checkbox" value="Fatigue" /> Fatigue</label>
+      <div class="inline-field">
+        <label for="h-vax">Vaccination Status:</label>
+        <select id="h-vax" required>
+          <option value="">Select Status</option>
+          <option>Vaccinated</option>
+          <option>Unvaccinated</option>
+        </select>
       </div>
 
-      <label for="h-checkup">Last Medical Checkup:</label>
-      <input type="date" id="h-checkup" />
+      <div class="inline-field">
+        <label>Recent Symptoms:</label>
+        <div class="checkbox-group">
+          <label><input type="checkbox" name="symptoms" value="Fever" /> Fever</label>
+          <label><input type="checkbox" name="symptoms" value="Cough" /> Cough</label>
+          <label><input type="checkbox" name="symptoms" value="Fatigue" /> Fatigue</label>
+        </div>
+      </div>
 
-      <label for="h-notes">Additional Health Notes:</label>
+      <div class="inline-field">
+        <label for="h-checkup">Last Medical Checkup:</label>
+        <input type="date" id="h-checkup" required />
+      </div>
+
+      <label for="h-notes">Additional Health Notes</label>
       <textarea id="h-notes" rows="3"></textarea>
 
       <button type="submit">Submit</button>
+      <div id="success-message">Thank you for submitting! Stay Safe!</div>
     </form>
 
-    <div class="table-container">
-      <table id="healthTable">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Age</th>
-            <th>Gender</th>
-            <th>Address</th>
-            <th>Vaccination</th>
-            <th>Symptoms</th>
-            <th>Last Checkup</th>
-            <th>Notes</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </div>
+    <table id="healthTable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Age</th>
+          <th>Gender</th>
+          <th>Address</th>
+          <th>Vaccination</th>
+          <th>Symptoms</th>
+          <th>Last Checkup</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
   </main>
 
   <script>
@@ -197,7 +219,7 @@
       const gender = document.querySelector('input[name="h-gender"]:checked')?.value || '';
       const address = document.getElementById('h-address').value;
       const vax = document.getElementById('h-vax').value;
-      const symptoms = [...document.querySelectorAll('input[type="checkbox"]:checked')]
+      const symptoms = [...document.querySelectorAll('input[name="symptoms"]:checked')]
         .map(el => el.value).join(', ');
       const checkup = document.getElementById('h-checkup').value;
       const notes = document.getElementById('h-notes').value;
@@ -214,8 +236,13 @@
         <td>${checkup}</td>
         <td>${notes}</td>
       `;
+      
+      const message = document.getElementById('success-message');
+      message.style.display = 'block';
+      setTimeout(() => {
+        message.style.display = 'none';
+      }, 3000);
 
-      alert("Thank you for submitting! Stay safe!");
       this.reset();
     });
   </script>
